@@ -24,10 +24,11 @@ class Perceptron(object):
         for _ in range(self.n_iter):
             errors = 0
             for xi,target in zip(X,y):
-                update = self.eta*(target - self.predict(xi))
-                self.w[1:] += update * xi
-                self.w[0] += update
-                errors += int(update != 0.0)
+                if target - self.predict(xi) != 0 : #add condition, prevent w0 = 0 if no updating
+                    update = self.eta*(target - self.predict(xi))
+                    self.w[1:] += update * xi
+                    self.w[0] += update
+                    errors += int(update != 0.0)
             self.errors.append(errors)
         return self
 
